@@ -9,10 +9,6 @@ const Home = () => {
     await logoutUser();
   };
 
-  const handleNavigate = () => {
-    nav('/login');
-  };
-
   return (
     <div className="min-h-screen w-full flex flex-col items-center p-8">
       <div className="w-full h-70 flex flex-col justify-center items-center gap-4">
