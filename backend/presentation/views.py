@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from .models import Presentation
 from .serializers import PresentationSerializer
+from .utils import generate_presentation_content  # This will call Gemini API
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -45,3 +46,43 @@ def presentation_detail(request, pid):
     elif request.method == 'DELETE':
         presentation.delete()
         return Response({'message': 'Presentation deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def create_presentation_with_AI(request):
+    # Step 1: Extract data
+    pname = request.data.get('pname')
+    number_of_slides = request.data.get('number_of_slides')
+    prompt = request.data.get('prompt')
+
+    # Step 2: Validate required fields
+    if not all([pname, number_of_slides, prompt]):
+        return Response({'error': 'All fields are required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Step 3: Create a basic presentation first
+    serializer = PresentationSerializer(data={
+        'pname': pname,
+        'theme': 'dark'
+    })
+
+    if serializer.is_valid():
+        presentation = serializer.save(owner=request.user)
+
+        # Step 4: Call Gemini API to get slide data
+        try:
+            slide_data = generate_presentation_content(prompt, number_of_slides)
+        except Exception as e:
+            return Response({'error': 'Failed to generate slide content', 'details': str(e)},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # Step 5: Update the presentation with generated content
+        presentation.pdata = slide_data  
+        presentation.theme = "dark"  
+        presentation.save()
+
+        # Step 6: Return updated presentation
+        updated_serializer = PresentationSerializer(presentation)
+        return Response(updated_serializer.data, status=status.HTTP_201_CREATED)
+    
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
