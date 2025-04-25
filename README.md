@@ -27,11 +27,10 @@ cd <repo-name>
 
 #### 3. **Set Up the Backend (Django)**
 ```bash
-cd backend
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
-python manage.py migrate
+cd backend
 python manage.py runserver
 ```
 > Backend will run on: `http://127.0.0.1:8000/`
@@ -40,7 +39,7 @@ python manage.py runserver
 ```bash
 cd frontend
 npm install
-npm start
+npm run dev
 ```
 > Frontend will run on: `http://localhost:3000/`
 
