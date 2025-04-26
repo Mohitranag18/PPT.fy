@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { create_presentation } from '../api/endpoints';
 
 function CustomPPT() {
   const nav = useNavigate();
+  const [pname, setPname] = useState('');
+
+  const handleCreatePresentation = async () => {
+    const response = await create_presentation(pname);
+    console.log(response);
+    // You can navigate somewhere after successful creation if you want
+    // nav('/your-next-page');
+  };
 
   return (
     <div className="min-h-screen w-full p-8 bg-gray-50 flex flex-col items-center">
@@ -16,13 +25,14 @@ function CustomPPT() {
           Presentation Name
         </label>
         <input
+          onChange={(e) => setPname(e.target.value)}
+          value={pname}
           type="text"
           id="pptName"
           placeholder="Enter presentation name"
           className="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-pink-400"
         />
-
-        <button className="w-full bg-pink-500 text-white py-2 rounded-lg hover:bg-pink-600 transition duration-200">
+        <button onClick={handleCreatePresentation} className="w-full bg-pink-500 text-white py-2 rounded-lg hover:bg-pink-600 transition duration-200">
           Create
         </button>
       </div>

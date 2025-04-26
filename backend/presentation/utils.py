@@ -180,7 +180,7 @@ Ensure the total number of slides is exactly {number_of_slides}.
 """
 
 
-    model = genai.GenerativeModel("gemini-1.5-pro")
+    model = genai.GenerativeModel("gemini-2.0-flash")
     response = model.generate_content(formatted_prompt)
 
     if not response or not response.text:

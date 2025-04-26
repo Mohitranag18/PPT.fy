@@ -1,6 +1,6 @@
 import React from 'react'
 
-function T1() {
+function T1({tempData}) {
   return (
     <div>
         Template 1

@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { create_presentation_with_AI } from '../api/endpoints'; // Adjust the path if needed
 
 function AiPPT() {
   const nav = useNavigate();
+  const [pname, setPname] = useState('');
+  const [number_of_slides, setNumber_of_slides] = useState(1);
+  const [prompt, setPrompt] = useState('');
+
+  const handleCreatePresentation  = async () => {
+    const response = await create_presentation_with_AI(pname, number_of_slides, prompt);
+    console.log(response);
+    const pid = response.pid
+    
+    nav(`/presentation/${pid}`)
+  };
 
   return (
     <div className="min-h-screen w-full bg-gray-50 p-8 flex flex-col items-center">
@@ -17,6 +29,8 @@ function AiPPT() {
             Presentation Name
           </label>
           <input
+            onChange={(e) => setPname(e.target.value)}
+            value={pname}
             type="text"
             id="pptName"
             placeholder="e.g., The Future of AI"
@@ -29,11 +43,15 @@ function AiPPT() {
             No. of Slides
           </label>
           <input
+            onChange={(e) => setNumber_of_slides(e.target.value)}
+            value={number_of_slides}
             type="number"
             id="numSlides"
             placeholder="e.g., 7"
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
+            min={1}
           />
+          <p>{number_of_slides}</p>
         </div>
 
         <div className="mb-6">
@@ -41,6 +59,8 @@ function AiPPT() {
             Describe the PPT Content
           </label>
           <textarea
+            onChange={(e) => setPrompt(e.target.value)}
+            value={prompt}
             id="description"
             rows="6"
             placeholder="Write a brief about your topic..."
@@ -48,7 +68,7 @@ function AiPPT() {
           ></textarea>
         </div>
 
-        <button onClick={()=>nav('/presentation/123')} className="w-full bg-pink-500 text-white py-2 rounded-lg hover:bg-pink-600 transition duration-200">
+        <button onClick={handleCreatePresentation } className="w-full bg-pink-500 text-white py-2 rounded-lg hover:bg-pink-600 transition duration-200">
           Generate
         </button>
       </div>

@@ -8,6 +8,11 @@ const AUTHENTICATED_URL = `${BASE_URL}authenticated/`
 const REGISTER_URL = `${BASE_URL}register/`
 const LOGOUT_URL = `${BASE_URL}logout/`
 
+const CREATE_PRESENTAION = `${BASE_URL}presentations/create/`
+const CREATE_PRESENTAION_WITH_AI = `${BASE_URL}presentations/createwithai/`
+
+
+
 
 
 axios.defaults.withCredentials = true; 
@@ -74,6 +79,33 @@ export const authenticated_user = async () => {
     try{
         await axios.post(AUTHENTICATED_URL,{}, { withCredentials: true });
         return true
+    }catch(error){
+        return false
+    }
+}
+ 
+export const create_presentation = async (pname) => {
+    try{
+        const response = await axios.post(CREATE_PRESENTAION,{pname}, { withCredentials: true });
+        return response.data
+    }catch(error){
+        return false
+    }
+}
+
+export const create_presentation_with_AI = async (pname, number_of_slides, prompt) => {
+    try{
+        const response = await axios.post(CREATE_PRESENTAION_WITH_AI,{pname, number_of_slides, prompt}, { withCredentials: true });
+        return response.data
+    }catch(error){
+        return false
+    }
+}
+
+export const get_presentation_detail = async (pid) => {
+    try{
+        const response = await axios.get(`${BASE_URL}presentations/${pid}`,{}, { withCredentials: true });
+        return response.data
     }catch(error){
         return false
     }

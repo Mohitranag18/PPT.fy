@@ -7,7 +7,7 @@ from .serializers import PresentationSerializer
 from .utils import generate_presentation_content  # This will call Gemini API
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def create_presentation(request):
     serializer = PresentationSerializer(data=request.data)
     if serializer.is_valid():
