@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function AiPPT() {
+  const nav = useNavigate();
+
   return (
     <div className="min-h-screen w-full bg-gray-50 p-8 flex flex-col items-center">
       <div className="mb-10 text-center">
@@ -45,7 +48,7 @@ function AiPPT() {
           ></textarea>
         </div>
 
-        <button className="w-full bg-pink-500 text-white py-2 rounded-lg hover:bg-pink-600 transition duration-200">
+        <button onClick={()=>nav('/presentation/123')} className="w-full bg-pink-500 text-white py-2 rounded-lg hover:bg-pink-600 transition duration-200">
           Generate
         </button>
       </div>

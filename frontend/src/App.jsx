@@ -10,6 +10,7 @@ import Layout from './components/layout';
 import PrivateRoute from './components/private_route';
 import CustomPPT from './routes/customPPT';
 import AiPPT from './routes/aiPPT';
+import Presentaion from './routes/presentaion';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route element={<PrivateRoute><Layout><Home /></Layout></PrivateRoute>} path='/' /> 
           <Route element={<PrivateRoute><Layout><CustomPPT /></Layout></PrivateRoute>} path='/custom-ppt' />
           <Route element={<PrivateRoute><Layout><AiPPT /></Layout></PrivateRoute>} path='/ai-ppt' /> 
+          <Route element={<PrivateRoute><Layout><Presentaion /> </Layout></PrivateRoute>} path='/presentation/:pid' /> 
           <Route element={<Layout><Login /></Layout>} path='/login' /> 
           <Route element={<Layout><Register /></Layout>} path='/register' /> 
         </Routes>

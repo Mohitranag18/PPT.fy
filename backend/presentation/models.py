@@ -6,12 +6,12 @@ from django.utils import timezone
 def default_slide():
     return [
         {
-            "slideNo": 1,
-            "templateName": "A1",
-            "heading": "Heading",
-            "subheading": "Sub-Heading",
-            "description": "Description"
-        }
+      "slideNo": 1,
+      "templateName": "T1",
+      "heading": "Heading",
+      "subheading": "Sub-Heading",
+      "description": "Description"
+    }
     ]
 
 class Presentation(models.Model):

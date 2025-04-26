@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function CustomPPT() {
+  const nav = useNavigate();
+
   return (
     <div className="min-h-screen w-full p-8 bg-gray-50 flex flex-col items-center">
       <div className="mb-10 text-center">
