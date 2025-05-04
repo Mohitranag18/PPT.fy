@@ -1,17 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { get_presentation_detail } from '../api/endpoints';
+import T1 from '../slideTemplates/t1';
+import T2 from '../slideTemplates/t2';
+import T3 from '../slideTemplates/t3';
+import T4 from '../slideTemplates/t4';
+import T5 from '../slideTemplates/t5';
+import T6 from '../slideTemplates/t6';
+import T1MiniView from '../slideTemplates/t1MiniView';
+import T2MiniView from '../slideTemplates/t2MiniView';
+import T3MiniView from '../slideTemplates/t3MiniView';
+import T4MiniView from '../slideTemplates/t4MiniView';
+import T5MiniView from '../slideTemplates/t5MiniView';
+import T6MiniView from '../slideTemplates/t6MiniView';
 
 function Presentation() {
-  const nav = useNavigate();
+  const [selectedSlide, setSelectedSlide] = useState(null);
+  const [selectedSlideData, setSelectedSlideData] = useState(null);
   const [pdata, setPdata] = useState([]);
   const { pid } = useParams();
+  const nav = useNavigate();
 
   const handleGetPresentationDetails = async () => {
     try {
       const response = await get_presentation_detail(pid);
       console.log(response);
       setPdata(response.pdata);
+      if (response.pdata.length > 0) {
+        setSelectedSlide(response.pdata[0].templateName);
+        setSelectedSlideData(response.pdata[0]);
+      }
     } catch (error) {
       console.error('Error fetching presentation details:', error);
     }
@@ -21,83 +39,53 @@ function Presentation() {
     handleGetPresentationDetails();
   }, [pid]);
 
+  const handleSlideClick = (slide) => {
+    setSelectedSlide(slide.templateName);
+    setSelectedSlideData(slide);
+  };
+
+  const renderMiniView = (slide) => {
+    switch (slide.templateName) {
+      case 'T1': return <T1MiniView tempData={slide} />;
+      case 'T2': return <T2MiniView tempData={slide} />;
+      case 'T3': return <T3MiniView tempData={slide} />;
+      case 'T4': return <T4MiniView tempData={slide} />;
+      case 'T5': return <T5MiniView tempData={slide} />;
+      case 'T6': return <T6MiniView tempData={slide} />;
+      default: return null;
+    }
+  };
+
+  const renderFullView = () => {
+    switch (selectedSlide) {
+      case 'T1': return <T1 tempData={selectedSlideData} />;
+      case 'T2': return <T2 tempData={selectedSlideData} />;
+      case 'T3': return <T3 tempData={selectedSlideData} />;
+      case 'T4': return <T4 tempData={selectedSlideData} />;
+      case 'T5': return <T5 tempData={selectedSlideData} />;
+      case 'T6': return <T6 tempData={selectedSlideData} />;
+      default: return null;
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
+    <div className="min-h-screen w-full p-6 flex flex-col items-center">
       <h1 className="text-3xl font-bold mb-6 text-pink-600">Presentation Slides</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-6xl">
-        {pdata.map((slide, index) => (
-          <div key={index} className="bg-white p-6 rounded-xl shadow-md">
-            <h2 className="text-xl font-bold text-gray-800 mb-2">Slide {slide.slideNo}</h2>
-            <p className="text-pink-500 font-semibold mb-2">Template: {slide.templateName}</p>
+      <div className='flex gap-6 justify-start w-full'>
+        {/* Mini Views */}
+        <div className="flex flex-col gap-6 w-80 h-[450px] overflow-y-auto">
+          {pdata.map((slide, index) => (
+            <div key={index} onClick={() => handleSlideClick(slide)} className="cursor-pointer">
+              {renderMiniView(slide)}
+            </div>
+          ))}
+        </div>
 
-            {slide.heading && <h3 className="text-lg font-semibold mb-1">{slide.heading.text}</h3>}
-            {slide.subheading && <h4 className="text-md text-gray-600 mb-2">{slide.subheading.text}</h4>}
-            {slide.topic && <h4 className="text-md text-gray-600 mb-2">{slide.topic.text}</h4>}
-
-            {slide.description && <p className="text-gray-700 mb-2">{slide.description.text}</p>}
-
-            {slide.points && (
-              <ul className="list-disc list-inside mb-2">
-                {slide.points.map((point, idx) => (
-                  <li key={idx} className="text-gray-700">{point.text}</li>
-                ))}
-              </ul>
-            )}
-
-            {/* Handle topic1 and points1 */}
-            {slide.topic1 && <h4 className="text-md font-semibold text-blue-600 mb-1">{slide.topic1.text}</h4>}
-            {slide.points1 && (
-              <ul className="list-disc list-inside mb-2">
-                {slide.points1.map((point, idx) => (
-                  <li key={idx} className="text-gray-700">{point.text}</li>
-                ))}
-              </ul>
-            )}
-
-            {/* Handle topic2 and points2 */}
-            {slide.topic2 && <h4 className="text-md font-semibold text-blue-600 mb-1">{slide.topic2.text}</h4>}
-            {slide.points2 && (
-              <ul className="list-disc list-inside mb-2">
-                {slide.points2.map((point, idx) => (
-                  <li key={idx} className="text-gray-700">{point.text}</li>
-                ))}
-              </ul>
-            )}
-
-            {/* Handle chartType content */}
-            {slide.chartType?.flowchart && (
-              <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-                <h4 className="font-bold mb-2">Flowchart Description:</h4>
-                <p>{slide.chartType.flowchart.description}</p>
-              </div>
-            )}
-
-            {slide.chartType?.graph && (
-              <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-                <h4 className="font-bold mb-2">Graph Title:</h4>
-                <p>{slide.chartType.graph.title}</p>
-              </div>
-            )}
-
-            {slide.chartType?.latex && (
-              <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-                <h4 className="font-bold mb-2">Latex Equation:</h4>
-                <p>{slide.chartType.latex.equation}</p>
-              </div>
-            )}
-
-            {/* Image and title */}
-            {slide.image && (
-              <div className="mt-4">
-                <img src={slide.image} alt="Slide Image" className="rounded-lg w-full object-cover" />
-                {slide.imageTitle && (
-                  <p className="text-center text-gray-700 font-semibold mt-2">{slide.imageTitle.text}</p>
-                )}
-              </div>
-            )}
-          </div>
-        ))}
+        {/* Full View */}
+        <div className="flex flex-col w-full">
+          {selectedSlide && selectedSlideData && renderFullView()}
+        </div>
       </div>
     </div>
   );

@@ -155,10 +155,6 @@ Return the output strictly in the following JSON format:
         }}
       }},
       "chartType": {{
-        "flowchart": {{
-          "code": "graph TD; A[\\"Start\\"] --> B[\\"Process\\"] --> C[\\"End\\"]",
-          "description": "This flowchart illustrates the basic process flow from start to end."
-        }},
         "graph": {{
           "chart_type": "bar",
           "labels": ["Category A", "Category B", "Category C"],
@@ -167,10 +163,6 @@ Return the output strictly in the following JSON format:
           "x_axis_label": "Categories",
           "y_axis_label": "Values"
         }},
-        "latex": {{
-          "equation": "x = \\\\frac{{-b \\\\pm \\\\sqrt{{b^2 - 4ac}}}}{{2a}}",
-          "description": "The quadratic formula used to find the roots of a quadratic equation."
-        }}
       }}
     }}
   ]
