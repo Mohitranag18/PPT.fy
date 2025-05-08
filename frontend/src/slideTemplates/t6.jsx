@@ -76,7 +76,7 @@ function T6({ tempData }) {
 
       {/* Flowchart */}
       {flowchartCode && (
-        <div className="bg-white p-3 mb-4 rounded-md border w-full max-h-56 overflow-auto">
+        <div className="bg-white p-3 mb-4 rounded-md border w-full max-h-96 overflow-auto">
           <h2 className="text-base font-semibold mb-2 text-gray-700">Flowchart:</h2>
           <div className="bg-gray-100 p-2 rounded" ref={mermaidRef}>
             <div className="mermaid">
@@ -86,17 +86,6 @@ function T6({ tempData }) {
           <p className="text-xs mt-2 text-gray-500">{tempData.chartType.flowchart.description}</p>
         </div>
       )}
-
-      {/* Graph */}
-      {tempData.chartType?.graph?.values && (
-        <div className="bg-white p-3 rounded-md border w-full">
-          <h2 className="text-base font-semibold mb-2 text-gray-700">Graph:</h2>
-          <div className="w-full h-48">
-            <Line data={chartData} options={chartOptions} />
-          </div>
-        </div>
-      )}
-
     </div>
   );
 }
