@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { get_presentation_detail } from '../api/endpoints';
+import usePresentationStore from '../store/usePresentationStore';
 import T1 from '../slideTemplates/t1';
 import T2 from '../slideTemplates/t2';
 import T3 from '../slideTemplates/t3';
@@ -15,17 +16,24 @@ import T5MiniView from '../slideTemplates/t5MiniView';
 import T6MiniView from '../slideTemplates/t6MiniView';
 
 function Presentation() {
-  const [selectedSlide, setSelectedSlide] = useState(null);
-  const [selectedSlideData, setSelectedSlideData] = useState(null);
-  const [pdata, setPdata] = useState([]);
   const { pid } = useParams();
   const nav = useNavigate();
+
+  // Zustand setters and state
+  const {
+    pdata,
+    selectedSlide,
+    selectedSlideData,
+    setPresentationData,
+    setSelectedSlide,
+    setSelectedSlideData,
+  } = usePresentationStore();
 
   const handleGetPresentationDetails = async () => {
     try {
       const response = await get_presentation_detail(pid);
       console.log(response);
-      setPdata(response.pdata);
+      setPresentationData(response.pdata);
       if (response.pdata.length > 0) {
         setSelectedSlide(response.pdata[0].templateName);
         setSelectedSlideData(response.pdata[0]);

@@ -69,14 +69,14 @@ function T6MiniView({ tempData }) {
         </div>
       )}
 
-      {/* Graph */}
+      {/* Graph
       {tempData.chartType?.graph?.values && (
         <div className="bg-white p-2 rounded-md border w-full">
           <div className="w-full h-20">
             <Line data={chartData} options={chartOptions} style={{ width: '100%' }} />
           </div>
         </div>
-      )}
+      )} */}
 
     </div>
   );

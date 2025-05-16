@@ -7,7 +7,7 @@ function Header() {
   return (
     <div className='h-20 w-full flex justify-between items-center px-16 py-8'>
         <div>
-            <h1 className='font-bold text-2xl cursor-pointer'>SideGine</h1>
+            <h1 className='font-bold text-2xl cursor-pointer'>PPT.fy</h1>
         </div>
         <div className='flex gap-6'>
             <p onClick={()=>nav('/')} className='font-semibold cursor-pointer'>Home</p>

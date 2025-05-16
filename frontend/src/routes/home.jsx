@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <div className="min-h-screen w-full flex flex-col items-center p-8">
       <div className="w-full h-70 flex flex-col justify-center items-center gap-4">
-        <h1 className="font-bold text-4xl text-pink-600">SlideGenie</h1>
+        <h1 className="font-bold text-4xl text-pink-600">PPT.fy</h1>
         <h2 className="font-semibold text-4xl  text-pink-600">Your AI-powered presentation wizard</h2>
       </div>
       <div className="flex gap-16">

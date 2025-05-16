@@ -70,15 +70,18 @@ Templates for slides => [
         "flowchart": {{
           "code": "Mermaid syntax code for flowchart (ensure no syntax errors)",
           "description": "Description of the flowchart"
-        }},
+        }}
+      }}
+    }}
+  T7 = {{
+      "slideNo": ,
+      "templateName": "T7",
+      "heading": "Heading",
+      "chartType": {{
         "graph": {{
           "code": "Matplotlib code for graph (include x and y axis labels)",
           "description": "Description of the graph"
         }},
-        "latex": {{
-          "equation": "LaTeX formatted equation",
-          "description": "Description of the equation"
-        }}
       }}
     }}
 ]
@@ -96,7 +99,6 @@ Instructions:
 - For fields that contain `image`, add an additional key `"imageTags"`, which should be a list of 3-5 dynamic keywords describing the image context based on the content.
 - Styles and imageTags should be generated **only in the output**, not inside the templates.
 - For type="flowchart": Provide the Mermaid code (flowchart, sequence, basic graph). **IMPORTANT: Always enclose text within nodes in double quotes.** For example, use `A[\\"Node Text\\"]` or `B{{\\"Node Text with {{braces}}\\"}}` instead of `A[Node Text]` or `B{{Node Text}}`. This ensures correct parsing of special characters.
-- For type="latex": Provide the mathematical equation or formula formatted using valid LaTeX syntax. **CRITICAL: Within the JSON string value for 'content', ALL backslashes (`\\\\`) needed for LaTeX MUST be double-escaped (`\\\\\\\\`).** For example, `\\\\frac{{a}}{{b}}` should be written as `"content": "\\\\\\\\frac{{a}}{{b}}"`. Similarly, `\\\\,` becomes `\\\\\\\\,`. **Use ONLY single curly braces `{{}}` within the LaTeX itself (e.g., for fractions, roots, limits), NEVER double braces `{{{{}}}}`.** **Do NOT include the surrounding `$` or `$$` delimiters.**
 - For type="graph": Provide a JSON string containing data for plotting. The JSON object MUST have keys: `"chart_type"` (string, e.g., "bar", "line"), `"labels"` (list of strings), `"values"` (list of numbers), **`"title"` (string, a specific descriptive title for the chart)**, **`"x_axis_label"` (string, REQUIRED label for the X-axis)**, and **`"y_axis_label"` (string, REQUIRED label for the Y-axis)**. Example: `{{\\"chart_type\\": \\"bar\\", \\"title\\": \\"Monthly Sales Growth\\", \\"labels\\": [\\"Jan\\", \\"Feb\\", \\"Mar\\"], \\"values\\": [15, 22, 18], \\"x_axis_label\\": \\"Month\\", \\"y_axis_label\\": \\"Sales\\"}}`.
 
 Return the output strictly in the following JSON format:
