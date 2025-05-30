@@ -1,70 +1,58 @@
-# ppt-maker
+# 🚀 PPT.fy — AI-Powered Presentation Generator
+
+**PPT.fy** is an AI-powered presentation maker that lets users create modern, professional PPTs in just one click. By simply providing a topic and the desired number of slides, the platform uses NLP to generate structured content, relevant images, animated flowcharts (via Manim), graphs, and LaTeX equations. Users can customize fonts, colors, and more, and save or download their presentations for later use.
 
 ---
 
-## 🛠️ Contribution Guide
+## ✨ Features
 
-Thank you for your interest in contributing to this project! We’re excited to have your help. Please follow the steps below to set up the project locally and start contributing.
+- 🎯 **One-click PPT Generation**  
+  Enter a topic and slide count — AI generates complete, structured presentations.
 
----
+- 🧠 **AI + NLP Based Content**  
+  Content is intelligently generated using NLP to maintain context, clarity, and flow.
 
-### 🧱 Tech Stack
-- **Frontend:** React.js
-- **Backend:** Django (REST Framework)
+- 🖼️ **Visuals Included**  
+  Auto-generated images, graphs, and animated flowcharts using the **Manim** library.
 
----
+- 🧮 **LaTeX Support**  
+  Perfect for educational or research slides with mathematical equations.
 
-### 🚀 Getting Started
+- 🎨 **Customization Options**  
+  Post-generation editing like font, size, color, and weight directly from the platform.
 
-#### 1. **Fork the Repository**
-Click on the top-right **Fork** button and create a copy under your GitHub account.
+- 💾 **Saved Presentations**  
+  All presentations are saved under the user’s profile for easy access later.
 
-#### 2. **Clone Your Fork**
-```bash
-git clone https://github.com/<your-username>/<repo-name>.git
-cd <repo-name>
-```
-
-#### 3. **Set Up the Backend (Django)**
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
-cd backend
-python manage.py runserver
-```
-> Backend will run on: `http://127.0.0.1:8000/`
-
-#### 4. **Set Up the Frontend (React)**
-```bash
-cd frontend
-npm install
-npm run dev
-```
-> Frontend will run on: `http://localhost:3000/`
+- 📥 **Downloadable PPT Files**  
+  Download and edit the presentation offline if needed.
 
 ---
 
-### 🌐 Connecting Frontend with Backend
-Make sure API calls from the React app point to your Django backend URL (e.g., `http://127.0.0.1:8000/api/...`). You can configure the base URL using environment variables or a config file.
+## 🛠️ Tech Stack
+
+### Frontend:
+- **React.js**
+- **Tailwind CSS** (for modern, responsive UI)
+- **Zustand** (lightweight state management)
+- **Manim** (for rendering animated flowcharts)
+
+### Backend:
+- **Django**
+- **Django REST Framework**
+- **SQLite** (for development)
+
+### Authentication:
+- **JWT Tokens** stored in **HTTP-only cookies** for secure user sessions
 
 ---
 
-### 📄 Contribution Guidelines
+## 🚧 Project Status
 
-- Create a new branch:
-  ```bash
-  git checkout -b feature/your-feature-name
-  ```
-- Make your changes and commit:
-  ```bash
-  git add .
-  git commit -m "Add: Your message"
-  ```
-- Push to your fork:
-  ```bash
-  git push origin feature/your-feature-name
-  ```
-- Open a Pull Request (PR) from your fork to the main repository.
+PPT.fy is currently under active development. We're working on improving the customization features and expanding our template library. Contributions, suggestions, and feedback are welcome!
 
 ---
+
+## 📬 Contact
+
+For questions, collaboration, or feedback, open an issue or email: [mohitr8998@gmail.com](mailto:mohitr8998@gmail.com)
