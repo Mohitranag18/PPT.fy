@@ -3,7 +3,7 @@ import mermaid from 'mermaid';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 
-function T6MiniView({ tempData }) {
+function T7MiniView({ tempData }) {
   const mermaidRef = useRef(null);
 
   useEffect(() => {
@@ -58,18 +58,17 @@ function T6MiniView({ tempData }) {
         {tempData.heading.text}
       </h1>
 
-      {/* Flowchart */}
-      {flowchartCode && (
-        <div className="bg-white p-2 mb-2 rounded-md border w-full max-h-24 overflow-auto">
-          <div className="bg-gray-100 p-1 rounded w-full">
-            <div className="mermaid text-xs w-full" ref={mermaidRef}>
-              {flowchartCode}
-            </div>
+      {/* Graph */}
+      {tempData.chartType?.graph?.values && (
+        <div className="bg-white p-2 rounded-md border w-full">
+          <div className="w-full h-20">
+            <Line data={chartData} options={chartOptions} style={{ width: '100%' }} />
           </div>
         </div>
       )}
+
     </div>
   );
 }
 
-export default T6MiniView;
+export default T7MiniView;

@@ -8,16 +8,23 @@ import T3 from '../slideTemplates/t3';
 import T4 from '../slideTemplates/t4';
 import T5 from '../slideTemplates/t5';
 import T6 from '../slideTemplates/t6';
+import T7 from '../slideTemplates/t7';
 import T1MiniView from '../slideTemplates/t1MiniView';
 import T2MiniView from '../slideTemplates/t2MiniView';
 import T3MiniView from '../slideTemplates/t3MiniView';
 import T4MiniView from '../slideTemplates/t4MiniView';
 import T5MiniView from '../slideTemplates/t5MiniView';
 import T6MiniView from '../slideTemplates/t6MiniView';
+import T7MiniView from '../slideTemplates/t7MiniView';
+import T1Form from '../slideTemplates/t1form';
+import T2Form from '../slideTemplates/t2form';
+import T3Form from '../slideTemplates/t3form';
+
 
 function Presentation() {
   const { pid } = useParams();
   const nav = useNavigate();
+  const [showForm, setShowForm] = useState(false);
 
   // Zustand setters and state
   const {
@@ -60,6 +67,7 @@ function Presentation() {
       case 'T4': return <T4MiniView tempData={slide} />;
       case 'T5': return <T5MiniView tempData={slide} />;
       case 'T6': return <T6MiniView tempData={slide} />;
+      case 'T7': return <T7MiniView tempData={slide} />
       default: return null;
     }
   };
@@ -72,29 +80,70 @@ function Presentation() {
       case 'T4': return <T4 tempData={selectedSlideData} />;
       case 'T5': return <T5 tempData={selectedSlideData} />;
       case 'T6': return <T6 tempData={selectedSlideData} />;
+      case 'T7': return <T7 tempData={selectedSlideData} />;
       default: return null;
     }
   };
 
+  const handleFormDataChange = (updatedData) => {
+  // Update the selected slide data in the store
+  setSelectedSlideData(updatedData);
+  
+  // Also update the data in the pdata array to keep everything in sync
+  const updatedPdata = pdata.map(slide => 
+    slide === selectedSlideData ? updatedData : slide
+  );
+  setPresentationData(updatedPdata);
+  
+  // Optional: Here you can also add API call to save changes to backend
+  // savePresentationData(pid, updatedPdata);
+};
+
   return (
-    <div className="min-h-screen w-full p-6 flex flex-col items-center">
-      <h1 className="text-3xl font-bold mb-6 text-pink-600">Presentation Slides</h1>
-
-      <div className='flex gap-6 justify-start w-full'>
-        {/* Mini Views */}
-        <div className="flex flex-col gap-6 w-80 h-[450px] overflow-y-auto">
-          {pdata.map((slide, index) => (
-            <div key={index} onClick={() => handleSlideClick(slide)} className="cursor-pointer">
-              {renderMiniView(slide)}
-            </div>
-          ))}
-        </div>
-
-        {/* Full View */}
-        <div className="flex flex-col w-full">
-          {selectedSlide && selectedSlideData && renderFullView()}
-        </div>
+    <div className='flex gap-6 justify-start w-full p-4'>
+      {/* Mini Views */}
+      <div className="flex flex-col gap-6 w-80 h-[450px] overflow-y-auto">
+        {pdata.map((slide, index) => (
+          <div key={index} onClick={() => handleSlideClick(slide)} className="cursor-pointer">
+            {renderMiniView(slide)}
+          </div>
+        ))}
       </div>
+
+      {/* Full View */}
+      <div className="flex flex-col w-full items-center">
+        {selectedSlide && selectedSlideData && renderFullView()}
+        
+        {/* Edit Button - Show for T1, T2, and T3 */}
+        {(selectedSlide === 'T1' || selectedSlide === 'T2' || selectedSlide === 'T3') && (
+          <button 
+            onClick={() => setShowForm(!showForm)}
+            className="mt-4 px-4 py-2 bg-pink-600 text-white rounded-md hover:bg-pink-700 self-center"
+          >
+            {showForm ? 'Hide Editor' : 'Edit Slide'}
+          </button>
+        )}
+      </div>
+      
+      {/* Form Panel - Show for T1, T2, or T3 when showForm is true */}
+      {showForm && selectedSlide === 'T1' && (
+        <T1Form 
+          tempData={selectedSlideData} 
+          onDataChange={handleFormDataChange}
+        />
+      )}
+      {showForm && selectedSlide === 'T2' && (
+        <T2Form 
+          tempData={selectedSlideData} 
+          onDataChange={handleFormDataChange}
+        />
+      )}
+      {showForm && selectedSlide === 'T3' && (
+        <T3Form 
+          tempData={selectedSlideData} 
+          onDataChange={handleFormDataChange}
+        />
+      )}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import React from 'react';
 
 function T1({ tempData }) {
   const { heading, subheading, description } = tempData || {};
+  console.log(`selected data:`, tempData)
 
   return (
     <div
