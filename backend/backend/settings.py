@@ -166,6 +166,7 @@ CSRF_TRUSTED_ORIGINS = ["https://frontend.vercel.app"]
 
 CORS_ALLOW_CREDENTIALS = True
 
+from datetime import timedelta
 
 SIMPLE_JWT = {
     'USER_ID_FIELD':'username',
