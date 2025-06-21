@@ -3,7 +3,7 @@ import mermaid from 'mermaid';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 
-function T6({ tempData }) {
+function T7({ tempData }) {
   const mermaidRef = useRef(null);
 
   useEffect(() => {
@@ -12,9 +12,6 @@ function T6({ tempData }) {
       mermaid.contentLoaded();
     }
   }, []);
-
-  const flowchartCode = tempData.chartType?.flowchart?.code;
-  const latexEquation = tempData.chartType?.latex?.equation;
 
   const chartData = {
     labels: tempData.chartType?.graph?.labels || [],
@@ -35,10 +32,20 @@ function T6({ tempData }) {
     plugins: {
       legend: {
         position: 'top',
+        labels: {
+          boxWidth: 12,
+          padding: 10,
+          font: {
+            size: 11
+          }
+        }
       },
       title: {
         display: true,
         text: tempData.chartType?.graph?.title || '',
+        font: {
+          size: 14
+        }
       },
     },
     scales: {
@@ -46,23 +53,46 @@ function T6({ tempData }) {
         title: {
           display: true,
           text: tempData.chartType?.graph?.x_axis_label || '',
+          font: {
+            size: 11
+          }
         },
+        ticks: {
+          font: {
+            size: 10
+          },
+          maxRotation: 45,
+          minRotation: 0
+        }
       },
       y: {
         title: {
           display: true,
           text: tempData.chartType?.graph?.y_axis_label || '',
+          font: {
+            size: 11
+          }
         },
+        ticks: {
+          font: {
+            size: 10
+          }
+        }
       },
     },
+    elements: {
+      point: {
+        radius: 3,
+        hoverRadius: 5
+      }
+    }
   };
 
   return (
-    <div className="p-4 w-full max-w-3xl aspect-video bg-[#f5f5f5] shadow-sm rounded-md border border-gray-300 flex flex-col items-center overflow-auto justify-start">
-      
+    <div className="p-4 w-full max-w-3xl aspect-video bg-[#f5f5f5] shadow-sm rounded-md border border-gray-300 flex flex-col items-center overflow-hidden">
       {/* Heading */}
       <h1
-        className="text-center mb-4"
+        className="text-center mb-4 flex-shrink-0"
         style={{
           fontFamily: tempData.heading.style.font,
           fontSize: `${tempData.heading.style.fontSize * 0.6}px`,
@@ -74,21 +104,20 @@ function T6({ tempData }) {
         {tempData.heading.text}
       </h1>
 
-        {/* Graph */}
-        {tempData.chartType?.graph?.values && (
-        <div className="bg-white p-3 mb-4 rounded-md border w-full max-h-96 overflow-auto">
-            <h2 className="text-base font-semibold mb-2 text-gray-700">Graph:</h2>
-            <div className="bg-gray-100 p-2 rounded w-full">
-            <div className="w-full min-h-[20rem]">
-                <Line data={chartData} options={chartOptions} style={{ width: '100%' }} />
+      {/* Graph */}
+      {tempData.chartType?.graph?.values && (
+        <div className="bg-white p-3 rounded-md border w-full flex-1 flex flex-col min-h-0">
+          <h2 className="text-base font-semibold mb-2 text-gray-700 flex-shrink-0">Graph:</h2>
+          <div className="bg-gray-100 p-2 rounded w-full flex-1 flex flex-col min-h-0">
+            <div className="w-full flex-1 relative min-h-0">
+              <Line data={chartData} options={chartOptions} />
             </div>
-            </div>
-            <p className="text-xs mt-2 text-gray-500">{tempData.chartType.graph.description}</p>
+          </div>
+          <p className="text-xs mt-2 text-gray-500 flex-shrink-0">{tempData.chartType.graph.description}</p>
         </div>
-        )}
-
+      )}
     </div>
   );
 }
 
-export default T6;
+export default T7;

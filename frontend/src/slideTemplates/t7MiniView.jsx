@@ -36,17 +36,51 @@ function T7MiniView({ tempData }) {
       title: { display: false },
     },
     scales: {
-      x: { ticks: { font: { size: 8 } } },
-      y: { ticks: { font: { size: 8 } } },
+      x: { 
+        ticks: { 
+          font: { size: 7 },
+          maxRotation: 45,
+          minRotation: 0,
+          maxTicksLimit: 5
+        },
+        grid: {
+          display: false
+        }
+      },
+      y: { 
+        ticks: { 
+          font: { size: 7 },
+          maxTicksLimit: 4
+        },
+        grid: {
+          display: false
+        }
+      },
     },
+    elements: {
+      point: {
+        radius: 1,
+        hoverRadius: 2
+      },
+      line: {
+        borderWidth: 1
+      }
+    },
+    layout: {
+      padding: {
+        top: 2,
+        bottom: 2,
+        left: 2,
+        right: 2
+      }
+    }
   };
 
   return (
     <div className="border border-gray-300 w-full max-w-[220px] aspect-[4/3] bg-[#f5f5f5] shadow-sm rounded-md p-3 flex flex-col overflow-hidden">
-      
       {/* Heading */}
       <h1
-        className="text-center mb-2"
+        className="text-center mb-2 flex-shrink-0"
         style={{
           fontFamily: tempData.heading.style.font,
           fontSize: `${tempData.heading.style.fontSize * 0.3}px`,
@@ -60,13 +94,12 @@ function T7MiniView({ tempData }) {
 
       {/* Graph */}
       {tempData.chartType?.graph?.values && (
-        <div className="bg-white p-2 rounded-md border w-full">
-          <div className="w-full h-20">
-            <Line data={chartData} options={chartOptions} style={{ width: '100%' }} />
+        <div className="bg-white p-1 rounded-md border w-full flex-1 flex flex-col min-h-0">
+          <div className="w-full flex-1 relative min-h-0">
+            <Line data={chartData} options={chartOptions} />
           </div>
         </div>
       )}
-
     </div>
   );
 }

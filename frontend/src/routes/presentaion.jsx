@@ -19,6 +19,10 @@ import T7MiniView from '../slideTemplates/t7MiniView';
 import T1Form from '../slideTemplates/t1form';
 import T2Form from '../slideTemplates/t2form';
 import T3Form from '../slideTemplates/t3form';
+import T4Form from '../slideTemplates/t4form';
+import T5Form from '../slideTemplates/t5form';
+import T6Form from '../slideTemplates/t6form';
+import T7Form from '../slideTemplates/t7form';
 
 
 function Presentation() {
@@ -100,50 +104,86 @@ function Presentation() {
 };
 
   return (
-    <div className='flex gap-6 justify-start w-full p-4'>
-      {/* Mini Views */}
-      <div className="flex flex-col gap-6 w-80 h-[450px] overflow-y-auto">
-        {pdata.map((slide, index) => (
-          <div key={index} onClick={() => handleSlideClick(slide)} className="cursor-pointer">
-            {renderMiniView(slide)}
-          </div>
-        ))}
-      </div>
+    <div className='w-full'>
+      <div className='flex gap-6 justify-start w-full p-4'>
+        {/* Mini Views */}
+        <div className="flex flex-col gap-5 w-80 h-[450px] overflow-y-auto">
+          {pdata.map((slide, index) => (
+            <div key={index} onClick={() => handleSlideClick(slide)} className="cursor-pointer">
+              {renderMiniView(slide)}
+            </div>
+          ))}
+        </div>
 
-      {/* Full View */}
-      <div className="flex flex-col w-full items-center">
-        {selectedSlide && selectedSlideData && renderFullView()}
+        {/* Full View */}
+        <div className="flex flex-col w-full items-center">
+          {selectedSlide && selectedSlideData && renderFullView()}
+          
+          
+        </div>
         
-        {/* Edit Button - Show for T1, T2, and T3 */}
-        {(selectedSlide === 'T1' || selectedSlide === 'T2' || selectedSlide === 'T3') && (
-          <button 
-            onClick={() => setShowForm(!showForm)}
-            className="mt-4 px-4 py-2 bg-pink-600 text-white rounded-md hover:bg-pink-700 self-center"
-          >
-            {showForm ? 'Hide Editor' : 'Edit Slide'}
-          </button>
+        {/* Form Panel - Show for T1, T2, or T3 when showForm is true */}
+        {showForm && selectedSlide === 'T1' && (
+          <T1Form 
+            tempData={selectedSlideData} 
+            onDataChange={handleFormDataChange}
+          />
+        )}
+        {showForm && selectedSlide === 'T2' && (
+          <T2Form 
+            tempData={selectedSlideData} 
+            onDataChange={handleFormDataChange}
+          />
+        )}
+        {showForm && selectedSlide === 'T3' && (
+          <T3Form 
+            tempData={selectedSlideData} 
+            onDataChange={handleFormDataChange}
+          />
+        )}
+        {showForm && selectedSlide === 'T4' && (
+          <T4Form 
+            tempData={selectedSlideData} 
+            onDataChange={handleFormDataChange}
+          />
+        )}
+        {showForm && selectedSlide === 'T5' && (
+          <T5Form 
+            tempData={selectedSlideData} 
+            onDataChange={handleFormDataChange}
+          />
+        )}
+        {showForm && selectedSlide === 'T6' && (
+          <T6Form 
+            tempData={selectedSlideData} 
+            onDataChange={handleFormDataChange}
+          />
+        )}
+        {showForm && selectedSlide === 'T7' && (
+          <T7Form 
+            tempData={selectedSlideData} 
+            onDataChange={handleFormDataChange}
+          />
         )}
       </div>
-      
-      {/* Form Panel - Show for T1, T2, or T3 when showForm is true */}
-      {showForm && selectedSlide === 'T1' && (
-        <T1Form 
-          tempData={selectedSlideData} 
-          onDataChange={handleFormDataChange}
-        />
-      )}
-      {showForm && selectedSlide === 'T2' && (
-        <T2Form 
-          tempData={selectedSlideData} 
-          onDataChange={handleFormDataChange}
-        />
-      )}
-      {showForm && selectedSlide === 'T3' && (
-        <T3Form 
-          tempData={selectedSlideData} 
-          onDataChange={handleFormDataChange}
-        />
-      )}
+
+      <div className='w-full flex justify-center items-center gap-8 border border-gray-400 py-4 bg-gray-100'>
+          {/* Edit Button */}
+          {(selectedSlide === 'T1' || selectedSlide === 'T2' || selectedSlide === 'T3' || selectedSlide === 'T4' || selectedSlide === 'T5' || selectedSlide === 'T6' || selectedSlide === 'T7') && (
+            <button 
+              onClick={() => setShowForm(!showForm)}
+              className="px-4 py-2 bg-pink-600 text-white rounded-md hover:bg-pink-700 self-center"
+            >
+              {showForm ? 'Hide Editor' : 'Edit Slide'}
+            </button>
+          )}
+
+          <button 
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 self-center"
+            >
+              Save Changes
+            </button>
+      </div>
     </div>
   );
 }
