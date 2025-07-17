@@ -7,6 +7,8 @@ from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from .utils.supabase_client import supabase
+from uuid import uuid4
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -123,12 +125,40 @@ def get_user_info(request):
     serializer = UserSerializer(user)
     return Response(serializer.data)
 
-@api_view(['PUT', 'PATCH'])
+@api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def edit_user_profile(request):
-    user = request.user
-    serializer = UserSerializer(user, data=request.data, partial=True)
+    try:
+        user = MyUser.objects.get(username=request.user.username)
+    except MyUser.DoesNotExist:
+        return Response({'error': 'User does not exist'}, status=404)
+
+    data = request.data.copy()  # Make it mutable
+    profile_image_file = request.FILES.get('profile_picture')
+
+    if profile_image_file:
+        ext = profile_image_file.name.split('.')[-1]
+        filename = f'{uuid4()}.{ext}'
+
+        profile_image_file.seek(0)
+        upload_response = supabase.storage.from_('profile-images').upload(
+            filename,
+            profile_image_file.read(),
+            {
+                "content-type": profile_image_file.content_type
+            }
+        )
+
+        if not upload_response or not hasattr(upload_response, "path"):
+            return Response({"error": "Failed to upload profile image"}, status=500)
+
+        image_url = supabase.storage.from_('profile-images').get_public_url(upload_response.path)
+        data['profile_picture'] = image_url
+
+    serializer = UserSerializer(user, data=data, partial=True)
+
     if serializer.is_valid():
         serializer.save()
-        return Response(serializer.data)
-    return Response(serializer.errors, status=400)
+        return Response({**serializer.data, "success": True})
+    
+    return Response({**serializer.errors, "success": False}, status=400)

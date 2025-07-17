@@ -4,7 +4,7 @@ from django.utils import timezone
 
 class MyUser(AbstractUser):
     email = models.EmailField(unique=True)
-    profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
+    profile_picture = models.URLField(blank=True, null=True)
     total_presentations = models.PositiveIntegerField(default=0)
     joined_date = models.DateTimeField(default=timezone.now)
 
