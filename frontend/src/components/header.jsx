@@ -1,13 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../context/useAuth";
 import { ChevronDown, Menu, X, User, Settings, LogOut, Sparkles } from 'lucide-react';
+import useUserStore from '../store/useUserStore';
+import { get_user_info } from '../api/endpoints';
 
 function Header() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user, logoutUser } = useAuth();
   const navigate = useNavigate();
+
+  // Zustand user info state
+  const {
+    userInfo,
+    userInfoLoading,
+    userInfoError,
+    setUserInfo,
+    setUserInfoLoading,
+    setUserInfoError,
+  } = useUserStore();
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      setUserInfoLoading(true);
+      setUserInfoError(null);
+      const data = await get_user_info();
+      if (data && data.username) {
+        setUserInfo(data);
+      } else {
+        setUserInfoError('Failed to load user info');
+      }
+      setUserInfoLoading(false);
+    };
+    if (!userInfo && !userInfoLoading && !userInfoError) {
+      fetchUserInfo();
+    }
+  }, [userInfo, userInfoLoading, userInfoError, setUserInfo, setUserInfoLoading, setUserInfoError]);
+
+  const { logoutUser } = useAuth();
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -16,6 +46,8 @@ function Header() {
   };
   
   const handleLogout = async () => {
+    // Clear user info from store on logout
+    setUserInfo(null);
     await logoutUser();
   };
 
@@ -59,8 +91,12 @@ function Header() {
             onClick={() => setIsProfileOpen(!isProfileOpen)}
             className='flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-all duration-200'
           >
-            <div className='w-6 h-6 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center'>
-              <User size={12} className='text-white' />
+            <div className='w-6 h-6 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center overflow-hidden'>
+              {userInfo && userInfo.profile_picture ? (
+                <img src={userInfo.profile_picture} alt="Profile" className="w-full h-full object-cover rounded-full" />
+              ) : (
+                <User size={12} className='text-white' />
+              )}
             </div>
             <ChevronDown size={14} className={`transform transition-transform ${isProfileOpen ? 'rotate-180' : ''}`} />
           </button>
@@ -68,8 +104,12 @@ function Header() {
           {isProfileOpen && (
             <div className='absolute right-0 top-12 w-56 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50'>
               <div className='px-4 py-3 border-b border-gray-100'>
-                <p className='text-sm font-medium text-gray-900'>John Doe</p>
-                <p className='text-xs text-gray-500'>john@example.com</p>
+                <p className='text-sm font-medium text-gray-900'>
+                  {userInfo && (userInfo.first_name || userInfo.last_name)
+                    ? `${userInfo.first_name || ''} ${userInfo.last_name || ''}`.trim()
+                    : userInfo?.username || 'User'}
+                </p>
+                <p className='text-xs text-gray-500'>{userInfo?.email || ''}</p>
               </div>
               <button
                 onClick={() => handleNavigation('/profile')}
@@ -125,9 +165,22 @@ function Header() {
             
             {/* Mobile Profile Section */}
             <div className='border-t border-gray-200 pt-4 mt-4'>
-              <div className='px-4 py-2 mb-2'>
-                <p className='text-sm font-medium text-gray-900'>John Doe</p>
-                <p className='text-xs text-gray-500'>john@example.com</p>
+              <div className='px-4 py-2 mb-2 flex items-center gap-3'>
+                <div className='w-8 h-8 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center overflow-hidden'>
+                  {userInfo && userInfo.profile_picture ? (
+                    <img src={userInfo.profile_picture} alt="Profile" className="w-full h-full object-cover rounded-full" />
+                  ) : (
+                    <User size={18} className='text-white' />
+                  )}
+                </div>
+                <div>
+                  <p className='text-sm font-medium text-gray-900'>
+                    {userInfo && (userInfo.first_name || userInfo.last_name)
+                      ? `${userInfo.first_name || ''} ${userInfo.last_name || ''}`.trim()
+                      : userInfo?.username || 'User'}
+                  </p>
+                  <p className='text-xs text-gray-500'>{userInfo?.email || ''}</p>
+                </div>
               </div>
               <button
                 onClick={() => handleNavigation('/profile')}

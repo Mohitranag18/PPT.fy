@@ -231,6 +231,33 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Newsletter Section */}
+      <div className="bg-gradient-to-r from-purple-600 to-pink-600 w-full">
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="text-center md:text-left">
+              <h3 className="text-xl font-bold mb-2 text-white">
+                Stay Updated with PPT.fy
+              </h3>
+              <p className="text-purple-100 text-sm">
+                Get the latest updates and presentation tips delivered to your inbox.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 min-w-[300px]">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 px-4 py-2 rounded-lg text-gray-900 outline-none ring-2 ring-white text-sm"
+              />
+              <button className="bg-white text-purple-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors flex items-center gap-2 justify-center text-sm">
+                Subscribe
+                <ArrowRight size={14} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

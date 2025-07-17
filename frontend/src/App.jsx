@@ -18,7 +18,7 @@ function App() {
     <Router>
       <AuthProvider>
         <Routes>
-          <Route element={<PrivateRoute><Layout><Home /></Layout></PrivateRoute>} path='/' /> 
+          <Route element={<Layout><Home /></Layout>} path='/' /> 
           <Route element={<PrivateRoute><Layout><CustomPPT /></Layout></PrivateRoute>} path='/custom-ppt' />
           <Route element={<PrivateRoute><Layout><AiPPT /></Layout></PrivateRoute>} path='/ai-ppt' /> 
           <Route element={<PrivateRoute><Layout><Profile /></Layout></PrivateRoute>} path='/profile' /> 

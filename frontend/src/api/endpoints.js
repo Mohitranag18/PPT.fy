@@ -119,3 +119,19 @@ export const get_user_info = async () => {
         return false;
     }
 }
+
+export const edit_user_profile = async (formData) => {
+    try {
+        const response = await axios.patch(
+            `${BASE_URL}user/edit/`,
+            formData,
+            {
+                withCredentials: true,
+                headers: { 'Content-Type': 'multipart/form-data' },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        return false;
+    }
+}
