@@ -19,11 +19,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-<<<<<<< HEAD
         model = MyUser
-=======
-        model = User
->>>>>>> 2dc9855e31b4e833f5c4fd561bd3f3f3ce7471a3
         fields = [
             'id', 'username', 'email', 'first_name', 'last_name',
             'profile_picture', 'total_presentations', 'joined_date'
