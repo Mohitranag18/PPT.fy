@@ -1,3 +1,4 @@
+import Footer from "./footer";
 import Header from "./header";
 
 const Layout = ({ children }) => {
@@ -5,6 +6,7 @@ const Layout = ({ children }) => {
       <div className="bg-white flex flex-col justify-center items-center">
         <Header />
         {children}
+        <Footer />
       </div>
     );
   };

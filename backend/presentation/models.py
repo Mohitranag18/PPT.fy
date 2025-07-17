@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 import uuid
 from django.utils import timezone
 
@@ -20,9 +20,9 @@ class Presentation(models.Model):
     pdata = models.JSONField(default=default_slide, help_text="Stores all slide data in JSON format")
     theme = models.CharField(max_length=100, default="default")
 
-    owner = models.ForeignKey(User, related_name='presentations', on_delete=models.CASCADE)
-    access_allowed_users = models.ManyToManyField(User, related_name='shared_presentations', blank=True)
-    req_for_access = models.ManyToManyField(User, related_name='requested_presentations', blank=True)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='presentations', on_delete=models.CASCADE)
+    access_allowed_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='shared_presentations', blank=True)
+    req_for_access = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='requested_presentations', blank=True)
 
     is_public = models.BooleanField(default=False)
     can_download = models.BooleanField(default=True)

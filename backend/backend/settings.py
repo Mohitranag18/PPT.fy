@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from decouple import config
 
+AUTH_USER_MODEL = 'base.MyUser'
+
 # OPENAI_API_KEY = config("OPENAI_API_KEY")
 GOOGLE_GEMINI_API_KEY = config("GOOGLE_GEMINI_API_KEY")
 

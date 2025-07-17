@@ -110,3 +110,12 @@ export const get_presentation_detail = async (pid) => {
         return false
     }
 }
+
+export const get_user_info = async () => {
+    try {
+        const response = await axios.get(`${BASE_URL}user/info/`, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        return false;
+    }
+}
