@@ -21,7 +21,7 @@ google-auth==2.40.1
 google-auth-httplib2==0.2.0
 google-generativeai==0.8.5
 googleapis-common-protos==1.70.0
-gotrue==2.12.3
+gotrue==2.11.4
 grpcio==1.71.0
 grpcio-status==1.71.0
 gunicorn==23.0.0
@@ -52,7 +52,7 @@ pycparser==2.22
 pydantic==2.11.4
 pydantic_core==2.33.2
 Pygments==2.19.1
-PyJWT==2.10.1
+PyJWT==2.9.0
 pyparsing==3.2.3
 PySocks==1.7.1
 python-dateutil==2.9.0.post0
