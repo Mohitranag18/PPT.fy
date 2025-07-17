@@ -160,11 +160,11 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:5173",
-    "https://graphia-8q65.vercel.app"
+    "https://ppt-fy.vercel.app"
 ]
 
 # For Channels
-CSRF_TRUSTED_ORIGINS = ["https://frontend.vercel.app"]
+CSRF_TRUSTED_ORIGINS = ["https://ppt-fy.vercel.app"]
 
 CORS_ALLOW_CREDENTIALS = True
 
