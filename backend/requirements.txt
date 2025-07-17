@@ -12,7 +12,6 @@ distro==1.9.0
 Django==5.2.1
 django-cors-headers==4.7.0
 djangorestframework==3.16.0
-djangorestframework-jwt==1.11.0
 djangorestframework_simplejwt==5.5.0
 frozendict==2.4.6
 google-ai-generativelanguage==0.6.15
