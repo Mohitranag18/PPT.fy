@@ -53,8 +53,7 @@ function Header() {
 
   const navItems = [
     { label: 'Home', path: '/' },
-    { label: 'Custom PPT', path: '/custom-ppt' },
-    { label: 'AI Generator', path: '/ai-ppt' },
+    { label: 'Build Now', path: '/build' },
     { label: 'Pricing', path: '/pricing' }
   ];
 

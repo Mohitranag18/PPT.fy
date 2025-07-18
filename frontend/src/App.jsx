@@ -12,15 +12,17 @@ import CustomPPT from './routes/customPPT';
 import AiPPT from './routes/aiPPT';
 import Presentaion from './routes/presentaion';
 import Profile from './routes/profile';
+import BuildPage from './routes/build';
+import PricingPage from './routes/pricing';
 
 function App() {
   return (
     <Router>
       <AuthProvider>
         <Routes>
-          <Route element={<Layout><Home /></Layout>} path='/' /> 
-          <Route element={<PrivateRoute><Layout><CustomPPT /></Layout></PrivateRoute>} path='/custom-ppt' />
-          <Route element={<PrivateRoute><Layout><AiPPT /></Layout></PrivateRoute>} path='/ai-ppt' /> 
+          <Route element={<Layout><Home /></Layout>} path='/' />
+          <Route element={<PrivateRoute><Layout><BuildPage /></Layout></PrivateRoute>} path='/build' />
+          <Route element={<PrivateRoute><Layout><PricingPage /></Layout></PrivateRoute>} path='/pricing' />
           <Route element={<PrivateRoute><Layout><Profile /></Layout></PrivateRoute>} path='/profile' /> 
           <Route element={<PrivateRoute><Layout><Presentaion /></Layout></PrivateRoute>} path='/presentation/:pid' /> 
           <Route element={<Login />} path='/login' /> 
