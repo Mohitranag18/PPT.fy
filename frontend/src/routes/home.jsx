@@ -1,10 +1,13 @@
 import React from 'react';
 import { Zap, Brain, Palette, Download, ArrowRight, Play, Sparkles, Check, Star } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const navigate = useNavigate();
+  
   const handleNavigation = (path) => {
     console.log(`Navigating to: ${path}`);
-    // In your actual app, replace with: nav(path)
+    navigate(path);
   };
 
   const features = [
@@ -75,7 +78,7 @@ const Home = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
             <button 
-              onClick={() => handleNavigation('/ai-ppt')}
+              onClick={() => handleNavigation('/build')}
               className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-lg font-medium hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center gap-2"
             >
               <Play size={18} />
@@ -216,7 +219,7 @@ const Home = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button 
-              onClick={() => handleNavigation('/ai-ppt')}
+              onClick={() => handleNavigation('/build')}
               className="bg-white text-purple-600 px-8 py-3 rounded-lg font-medium hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center gap-2 justify-center"
             >
               Get Started Free
@@ -235,7 +238,7 @@ const Home = () => {
       {/* Newsletter Section */}
       <div className="bg-gradient-to-r from-purple-600 to-pink-600 w-full">
         <div className="max-w-7xl mx-auto px-6 py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex flex-col md:flex-row items-center justify-between mx-12 gap-6">
             <div className="text-center md:text-left">
               <h3 className="text-xl font-bold mb-2 text-white">
                 Stay Updated with PPT.fy
@@ -248,7 +251,7 @@ const Home = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-2 rounded-lg text-gray-900 outline-none ring-2 ring-white text-sm"
+                className="flex-1 px-4 py-2 rounded-lg text-white outline-none ring-1 ring-white text-sm"
               />
               <button className="bg-white text-purple-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors flex items-center gap-2 justify-center text-sm">
                 Subscribe

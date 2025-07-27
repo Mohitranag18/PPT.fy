@@ -93,9 +93,9 @@ export const create_presentation = async (pname) => {
     }
 }
 
-export const create_presentation_with_AI = async (pname, number_of_slides, prompt) => {
+export const create_presentation_with_AI = async (pname, number_of_slides, prompt, useCase, theme) => {
     try{
-        const response = await axios.post(CREATE_PRESENTAION_WITH_AI,{pname, number_of_slides, prompt}, { withCredentials: true });
+        const response = await axios.post(CREATE_PRESENTAION_WITH_AI,{pname, number_of_slides, prompt, useCase, theme}, { withCredentials: true });
         return response.data
     }catch(error){
         return false

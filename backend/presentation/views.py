@@ -48,6 +48,7 @@ def presentation_detail(request, pid):
         return Response({'message': 'Presentation deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
 
 
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_presentation_with_AI(request):
@@ -55,32 +56,34 @@ def create_presentation_with_AI(request):
     pname = request.data.get('pname')
     number_of_slides = request.data.get('number_of_slides')
     prompt = request.data.get('prompt')
-
+    use_case = request.data.get('useCase', 'Education')  # Default to Education
+    theme = request.data.get('theme', 'Minimal')  # Default to Minimal
+    
     # Step 2: Validate required fields
     if not all([pname, number_of_slides, prompt]):
         return Response({'error': 'All fields are required.'}, status=status.HTTP_400_BAD_REQUEST)
-
+    
     # Step 3: Create a basic presentation first
     serializer = PresentationSerializer(data={
         'pname': pname,
-        'theme': 'dark'
+        'theme': theme.lower()  # Store theme in lowercase for consistency
     })
-
+    
     if serializer.is_valid():
         presentation = serializer.save(owner=request.user)
-
-        # Step 4: Call Gemini API to get slide data
+        
+        # Step 4: Call Gemini API to get slide data with enhanced parameters
         try:
-            slide_data = generate_presentation_content(prompt, number_of_slides)
+            slide_data = generate_presentation_content(prompt, number_of_slides, use_case, theme)
         except Exception as e:
             return Response({'error': 'Failed to generate slide content', 'details': str(e)},
-                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+                          status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
         # Step 5: Update the presentation with generated content
-        presentation.pdata = slide_data  
-        presentation.theme = "dark"  
+        presentation.pdata = slide_data
+        presentation.theme = theme.lower()
         presentation.save()
-
+        
         # Step 6: Return updated presentation
         updated_serializer = PresentationSerializer(presentation)
         return Response(updated_serializer.data, status=status.HTTP_201_CREATED)
