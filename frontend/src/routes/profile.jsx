@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { get_user_info, edit_user_profile } from '../api/endpoints'
 import { User, Edit3, Camera, Calendar, Mail, Users, Save, X, Check } from 'lucide-react'
 import useUserStore from '../store/useUserStore';
+import UserPpts from '../components/user_ppts';
 
 function Profile() {
   // Zustand user info state
@@ -322,6 +323,8 @@ function Profile() {
             </div>
           </div>
         </div>
+
+        <UserPpts />
       </div>
     </div>
   );

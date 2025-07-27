@@ -207,60 +207,82 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="px-6 py-16 bg-gradient-to-r from-purple-600 to-pink-600 w-full">
-        <div className="max-w-4xl mx-auto text-center w-full">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-            Ready to create amazing presentations?
-          </h2>
-          <p className="text-lg text-purple-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of professionals who've already discovered the power of AI-driven presentation creation
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button 
-              onClick={() => handleNavigation('/build')}
-              className="bg-white text-purple-600 px-8 py-3 rounded-lg font-medium hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center gap-2 justify-center"
-            >
-              Get Started Free
-              <ArrowRight size={18} />
-            </button>
-            <button 
-              onClick={() => handleNavigation('/pricing')}
-              className="border border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white/10 transition-all duration-200"
-            >
-              View Pricing
-            </button>
+      {/* Newsletter Section */}
+      <section className="px-6 py-16 bg-gray-50 w-full">
+        <div className="max-w-7xl mx-auto w-full">
+          <div className="bg-white rounded-3xl border border-gray-100 overflow-hidden">
+            <div className="grid lg:grid-cols-2 gap-0">
+              {/* Left side - Content */}
+              <div className="p-8 lg:p-12 flex flex-col justify-center">
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 px-4 py-2 rounded-full text-sm font-medium mb-6 w-fit">
+                  <Sparkles size={16} />
+                  Newsletter
+                </div>
+                
+                <h3 className="text-3xl lg:text-4xl font-bold mb-4 text-gray-900 leading-tight">
+                  Stay ahead with 
+                  <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent block">
+                    PPT.fy insights
+                  </span>
+                </h3>
+                
+                <p className="text-gray-600 text-lg mb-6 leading-relaxed">
+                  Get exclusive tips, AI presentation trends, and feature updates delivered to your inbox every week.
+                </p>
+                
+                <div className="flex items-center gap-3 text-sm text-gray-500 mb-8">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span>Weekly insights</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <span>No spam</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                    <span>Unsubscribe anytime</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Right side - Form */}
+              <div className="bg-gradient-to-br from-gray-50 to-white p-8 lg:p-12 flex flex-col justify-center border-l border-gray-100">
+                <div className="space-y-4">
+                  <div className="relative">
+                    <input
+                      type="email"
+                      placeholder="Enter your email address"
+                      className="w-full px-6 py-4 rounded-xl border-2 border-gray-200 text-gray-900 placeholder-gray-500 outline-none focus:ring-4 focus:ring-purple-500/20 focus:border-purple-500 transition-all duration-200 text-base"
+                    />
+                  </div>
+                  
+                  <button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-4 rounded-xl font-semibold hover:shadow-lg hover:scale-[1.02] transition-all duration-200 flex items-center gap-2 justify-center text-base group">
+                    Subscribe to Newsletter
+                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-200" />
+                  </button>
+                  
+                  <p className="text-xs text-gray-500 text-center leading-relaxed">
+                    By subscribing, you agree to receive marketing emails from PPT.fy. You can unsubscribe at any time.
+                  </p>
+                </div>
+                
+                {/* Social proof */}
+                <div className="mt-8 pt-6 border-t border-gray-200">
+                  <div className="flex items-center justify-center gap-2 text-sm text-gray-600">
+                    <div className="flex -space-x-2">
+                      <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full border-2 border-white"></div>
+                      <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full border-2 border-white"></div>
+                      <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-teal-400 rounded-full border-2 border-white"></div>
+                    </div>
+                    <span className="font-medium">Join 2,500+ subscribers</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
-
-      {/* Newsletter Section */}
-      <div className="bg-gradient-to-r from-purple-600 to-pink-600 w-full">
-        <div className="max-w-7xl mx-auto px-6 py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between mx-12 gap-6">
-            <div className="text-center md:text-left">
-              <h3 className="text-xl font-bold mb-2 text-white">
-                Stay Updated with PPT.fy
-              </h3>
-              <p className="text-purple-100 text-sm">
-                Get the latest updates and presentation tips delivered to your inbox.
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3 min-w-[300px]">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-2 rounded-lg text-white outline-none ring-1 ring-white text-sm"
-              />
-              <button className="bg-white text-purple-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors flex items-center gap-2 justify-center text-sm">
-                Subscribe
-                <ArrowRight size={14} />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

@@ -10,9 +10,7 @@ const LOGOUT_URL = `${BASE_URL}logout/`
 
 const CREATE_PRESENTAION = `${BASE_URL}presentations/create/`
 const CREATE_PRESENTAION_WITH_AI = `${BASE_URL}presentations/createwithai/`
-
-
-
+const LIST_PRESENTATIONS_URL = `${BASE_URL}presentations/`
 
 
 axios.defaults.withCredentials = true; 
@@ -108,6 +106,15 @@ export const get_presentation_detail = async (pid) => {
         return response.data
     }catch(error){
         return false
+    }
+}
+
+export const list_presentations = async () => {
+    try {
+        const response = await axios.get(LIST_PRESENTATIONS_URL, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        return false;
     }
 }
 

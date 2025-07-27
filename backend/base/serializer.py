@@ -18,13 +18,17 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         return user
 
 class UserSerializer(serializers.ModelSerializer):
+    total_presentations = serializers.SerializerMethodField()
     class Meta:
         model = MyUser
         fields = [
             'id', 'username', 'email', 'first_name', 'last_name',
             'profile_picture', 'total_presentations', 'joined_date'
         ]
-        read_only_fields = ['total_presentations', 'joined_date', 'id']
+        read_only_fields = ['joined_date', 'id']
+
+    def get_total_presentations(self, obj):
+        return obj.presentations.count()
 
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
