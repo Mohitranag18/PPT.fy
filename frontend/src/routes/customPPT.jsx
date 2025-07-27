@@ -18,8 +18,8 @@ function CustomPPT() {
   const handleCreatePresentation = async () => {
     const response = await create_presentation(pname);
     console.log(response);
-    // You can navigate somewhere after successful creation if you want
-    // nav('/your-next-page');
+    const pid = response.pid
+    nav(`/presentation/${pid}`)
   };
 
   return (

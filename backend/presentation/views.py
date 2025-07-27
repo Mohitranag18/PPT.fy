@@ -9,7 +9,63 @@ from .utils import generate_presentation_content  # This will call Gemini API
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
 def create_presentation(request):
-    serializer = PresentationSerializer(data=request.data)
+    # Default theme and style (Minimal)
+    theme = request.data.get('theme', 'Minimal')
+    theme_styles = {
+        "Minimal": {
+            "primary_font": "Arial",
+            "heading_size": 32,
+            "subheading_size": 24,
+            "text_size": 20,
+            "primary_color": "#333333",
+            "accent_color": "#666666",
+        },
+        # Add more themes if needed
+    }
+    current_theme = theme_styles.get(theme, theme_styles["Minimal"])
+
+    # Default T1 slide with styles
+    default_slide = [{
+        "slideNo": 1,
+        "templateName": "T1",
+        "heading": {
+            "text": "Heading",
+            "style": {
+                "font": current_theme["primary_font"],
+                "fontSize": current_theme["heading_size"],
+                "color": current_theme["primary_color"],
+                "bold": True,
+                "italic": False
+            }
+        },
+        "subheading": {
+            "text": "Sub-Heading",
+            "style": {
+                "font": current_theme["primary_font"],
+                "fontSize": current_theme["subheading_size"],
+                "color": current_theme["accent_color"],
+                "bold": False,
+                "italic": False
+            }
+        },
+        "description": {
+            "text": "This is a demo description for your first slide.",
+            "style": {
+                "font": current_theme["primary_font"],
+                "fontSize": current_theme["text_size"],
+                "color": current_theme["primary_color"],
+                "bold": False,
+                "italic": False
+            }
+        }
+    }]
+
+    # Prepare data for serializer
+    data = request.data.copy()
+    data['pdata'] = default_slide
+    data['theme'] = theme.lower()
+
+    serializer = PresentationSerializer(data=data)
     if serializer.is_valid():
         serializer.save(owner=request.user)  # 👈 sets the current user as the owner
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -46,7 +102,6 @@ def presentation_detail(request, pid):
     elif request.method == 'DELETE':
         presentation.delete()
         return Response({'message': 'Presentation deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
-
 
 
 @api_view(['POST'])
